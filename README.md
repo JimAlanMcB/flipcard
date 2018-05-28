@@ -3,7 +3,7 @@ A Flippin' Memory Card Game
 # Getting Started 
 Flip the cards to play, match two until you've matched all the cards!
 Works on Edge, Chrome, Mozilla, Iphone and Android
-# Dependiences 
+# Dependencies 
 None 
 # Known Issues
 Sometimes sound does not work without WiFi. 
