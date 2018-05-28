@@ -71,10 +71,10 @@ $('.card').on('click', function (e) {
 
     if (gameStarted) {
 
-        if ($(e.target).css('transform').length > 10) {
+        if ($(e.target).css('-webkit-transform').length > 10) {
 
-            $(e.target).css('transform', '');
-            $(e.target).prev().css('transform', '');
+            $(e.target).css('-webkit-transform', '');
+            $(e.target).prev().css('-webkit-transform', '');
         } else
             flipCards(e.target);
         if (choice.length > 0) {
@@ -93,8 +93,8 @@ $('.card').on('click', function (e) {
 
 function flipCards(e) {
 
-    $(e).css('transform', 'rotateY(180deg)');
-    $(e.nextElementSibling).css('transform', 'rotateY(360deg)');
+    $(e).css('-webkit-transform', 'rotateY(180deg)');
+    $(e.nextElementSibling).css('-webkit-transform', 'rotateY(360deg)');
 }
 
 function checkWinner(firstSelection, secondSelection) {
@@ -199,8 +199,8 @@ function clearSelections() {
 
 function clearChoices() {
 
-    $('.back').css('transform', '');
-    $('.front').css('transform', '');
+    $('.back').css('-webkit-transform', '');
+    $('.front').css('-webkit-transform', '');
     choice = '';
     choice2 = '';
 }
