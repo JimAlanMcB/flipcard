@@ -7,9 +7,13 @@
 // STORE DATA / LEADER BOARD
 // FANCY UP MORE
 let cardFlipSound = new Audio("sounds/cardflip.wav");
+cardFlipSound.preload = "auto";
 let winAudio = new Audio("sounds/win.wav");
+winAudio.preload = "auto";
 let popAway = new Audio("sounds/popaway.wav");
+popAway.preload = "auto";
 let bgMusic = new Audio("sounds/Toys.mp3");
+bgMusic.preload = "auto";
 let totalWinCount = 0;
 let choice2 = '';
 let gameStarted = false;
