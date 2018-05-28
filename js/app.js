@@ -41,6 +41,8 @@ fillStars();
 // REMOVE POP UP
 // CHECK IF TIMER IS RUNNING, FILL NEW STARS, RANDOM CARDS, START THE GAME
 $('.start').on('click', function () {
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
     bgMusic.play();
     winPopUp.style.display = "none";
     checkTimer();
