@@ -1,5 +1,5 @@
 <html lang="en">
-   
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,9 +18,7 @@
             <h1>Flippin' Card</h1>
             <div class="timer">0:00</div>
             <div class="star-rating">
-                <span class="fa fa-star star-filled"></span>
-                <span class="fa fa-star star-filled"></span>
-                <span class="fa fa-star star-filled"></span>
+
             </div>
 
             <div class="attempts">Incorrect Flips: 0</div>
@@ -87,14 +85,31 @@
                     <div class="front"></div>
                     <div class="back fa">X</div>
                 </div>
+                <div class="card">
+                    <div class="front"></div>
+                    <div class="back fa">X</div>
+                </div>
 
 
 
             </div>
+
             <button class="start button">Start Game</button>
             <button class="start button">Restart</button>
+            <!-- <button class="stop button">Pause</button>             -->
         </div>
     </main>
+
+    <div id="winPopUp" class="winPopUp">
+
+
+        <div class="winPopUp-content">
+            <span class="close">&times;</span>
+            <p class='winText'>You've Won! </p>
+            <button class="start button">Play Again?</button>
+        </div>
+
+    </div>
 
     <script src="js/app.js"></script>
 </body>

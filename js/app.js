@@ -1,11 +1,13 @@
-// TODO:: make sure x's and o's are even -- done
-// add imgs instead of letters -- done
-// edit css to make pretty
-// fix star rating to reflect attempts correctly not just after 2 misses. 
-// shuffle cards randomly
+// TODO::  
 
+// USE CONST WHERE POSSIBLY (MAYBE)
+// STOP TIMER BUTTON -- NEED TO ADJUST
+// FLIP CARDS FIRST TO SHOW ALL
+// EASY MODE / HARD MODE  
+// STORE DATA / LEADER BOARD
+// FANCY UP MORE
 
-let choice = '';
+let totalWinCount = 0;
 let choice2 = '';
 let gameStarted = false;
 let running = false;
@@ -13,6 +15,8 @@ let attempts = 0;
 let moves = 0;
 let firstSelection;
 let secondSelection;
+// let cardAmount = 8;
+// let gameMode = ''; FOR GAME MODES
 
 let cardArray = [];
 cardArray = document.querySelectorAll('.back');
@@ -21,11 +25,21 @@ cardArray = document.querySelectorAll('.back');
 let currentMoves = document.querySelector('.moves');
 let starRatingAttempts = document.querySelector('.attempts');
 let restart = document.querySelector('#restart');
+let pause = document.querySelector('.pause');
+let winPopUp = document.querySelector('.winPopUp');
+let winText = document.querySelector('.winText');
+
+fillStars();
+
+//fillCards(); // FOR GAME MODES
 
 
-
+// START GAME ON CLICK
+// REMOVE POP UP
+// CHECK IF TIMER IS RUNNING, FILL NEW STARS, RANDOM CARDS, START THE GAME
 $('.start').on('click', function () {
 
+    winPopUp.style.display = "none";
     checkTimer();
     fillStars();
     randomizeCards();
@@ -33,7 +47,15 @@ $('.start').on('click', function () {
 
 });
 
+// FOR PAUSE BUTTON
+// $('.stop').on('click', function () {
+//    clearTimer();   
+//    $('.card').css('pointer-events', 'none');
+// });
+
+// RESET ALL AND START GAME
 function startGame() {
+
     attempts = 0;
     moves = 0;
     clearChoices();
@@ -42,11 +64,12 @@ function startGame() {
     gameStarted = true;
 }
 
+// EACH CARD CLICK - 
+// APPLY THE CSS TRANSFORM FOR FLIP ANIMATION
+// AND DETERMINE IF IT'S A WINNER OR NOT
 $('.card').on('click', function (e) {
 
-
     if (gameStarted) {
-
 
         if ($(e.target).css('transform').length > 10) {
 
@@ -57,16 +80,14 @@ $('.card').on('click', function (e) {
         if (choice.length > 0) {
             secondSelection = this.lastElementChild;
             choice2 = this.lastElementChild.innerHTML;
-            console.log('Second Choice ' + choice2)
             checkWinner(secondSelection, firstSelection);
         } else {
             firstSelection = this.lastElementChild;
             choice = this.lastElementChild.innerHTML;
-            console.log('First Choice ' + choice);
             return firstSelection;
         }
     } else {
-        alert('start the game first');
+        // pass
     }
 });
 
@@ -82,31 +103,91 @@ function checkWinner(firstSelection, secondSelection) {
         return;
     }
     if (choice === choice2) {
-        //setTimeout(clearSelections, 1000);
-        clearSelections();
-        clearChoices();
+
+        setTimeout(() => {
+            clearSelections();
+            clearChoices();
+        }, 500);
+
         moves += 1;
         currentMoves.innerHTML = 'Correct Flips: ' + moves;
         if (moves === cardArray.length / 2) {
-            console.log('winner');
-            alert('winner winner chicken dinner');
+
+            // ADD TOTAL WIN COUNT
+            // TIMER RUNNING FALSE
+            // STOP TIMER
+            // CLEAR CHOICES AND SELECTIONS
+            // SEND WINNING MESSAGE
+            totalWinCount += 1;
             running = false;
             clearTimer();
+            clearChoices();
+            clearSelections();
+            displayWinMessage();
             return;
-            // stop timer
-            // show stars
-            // ask to restart game
+
         }
 
     } else {
         attempts += 1;
-        choice = '';
-        choice2 = '';
+        clearClicks();
         setTimeout(clearChoices, 1000);
         starRatingAttempts.innerHTML = 'Incorrect Flips: ' + attempts;
         adjustStarRating(attempts);
     }
 
+}
+
+function displayWinMessage() {
+
+    // POP UP DISPLAY MESSAGE
+    // GATHER USEFUL DATA FROM GAME TO DISPLAY
+    let totalStars = document.querySelectorAll('.star-filled');
+    let totalTimeView = document.querySelector('.timer');
+    let getSecOrMin = totalTimeView.innerHTML.length;
+    let starOrStars = '';
+    let secOrMin = '';
+    let timeOrTimes = '';
+
+    if (getSecOrMin < 3) {
+        secOrMin = ' seconds';
+    } else {
+        secOrMin = ' minutes';
+    }
+    if (totalStars.length === 1) {
+        starOrStars = ' star';
+    } else {
+        starOrStars = ' stars';
+    }
+    if (totalWinCount === 1) {
+        timeOrTimes = ' time';
+    } else {
+        timeOrTimes = ' times';
+    }
+
+    winPopUp.style.display = "block";
+    winText.innerHTML = '<h2>YOU WON!</h2>' + 'It took you ' + attempts + ' guesses to win, ' +
+        'You recieved ' + totalStars.length + '' + starOrStars + ' , and it took you ' + totalTimeView.innerHTML + ' ' + secOrMin + ' to win!' +
+        '<br>You have won a total of ' + totalWinCount + '' + timeOrTimes;
+
+}
+let winPopUpSpan = document.getElementsByClassName("close")[0];
+
+winPopUpSpan.onclick = function () {
+    winPopUp.style.display = "none";
+}
+
+window.onclick = function (e) {
+    if (e.target == winPopUp) {
+        winPopUp.style.display = "none";
+    }
+}
+
+function clearClicks() {
+    firstSelection = '';
+    secondSelection = '';
+    choice = '';
+    choice2 = '';
 }
 
 function clearSelections() {
@@ -125,10 +206,14 @@ function clearChoices() {
 }
 
 function adjustStarRating(attempts) {
+    let currentAttempts = attempts;
     let stars = document.querySelector('.star-filled');
-    if (attempts > 2) {
+    if (currentAttempts == 7) {
         stars.remove();
-        // need to add multiple checks instead of just one. 
+    } else if (currentAttempts == 12) {
+        stars.remove();
+    } else if (currentAttempts == 18) {
+        stars.remove();
     }
 }
 
@@ -138,7 +223,7 @@ function fillStars() {
     }
     for (var i = 0; i < 3; i++) {
         $('.star-rating').append('<span class="fa fa-star star-filled"></span>');
-        console.log('test');
+
     }
 }
 
@@ -153,7 +238,7 @@ function startTimer(duration, display) {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
+
         if (minutes > 0) {
             seconds = seconds < 10 ? "0" + seconds : seconds;
         }
@@ -188,7 +273,9 @@ function checkTimer() {
     startTimer(60);
 };
 
-
+// TAKE THE CARDARRAY(ALL OF THE HTML CARDS), AND PUT THEM INTO A NEW ARRAY
+// TAKE A RANDOM INDEX FROM ICON ARRAY AND PUSH TWICE TO NEW ARRAY
+// SHUFFLE THE ARRAY TO BE FAIR
 function randomizeCards() {
 
     $('.front').show();
@@ -196,14 +283,13 @@ function randomizeCards() {
     let iconArray = ['&#xf1b9;', '&#xf206;', '&#xf0fb;', '&#xf1e3;', '&#xf0eb;', '&#xf1b0;', '&#xf135;', '&#xf2dc;']
 
     let cardIconArray = [];
-    let schuffleArray = [];
+    let shuffleArray = [];
 
     cardArray.forEach(e => {
-        schuffleArray.push(e);
+        shuffleArray.push(e);
     });
 
-    schuffleArray.forEach(e => {
-
+    shuffleArray.forEach(e => {
 
         let fillArray = (e) => {
 
@@ -229,9 +315,9 @@ function randomizeCards() {
         }
         return array;
     }
-    shuffle(schuffleArray);
-    for (let i = 0; i < schuffleArray.length; i++) {
-        schuffleArray[i].innerHTML = cardIconArray[i];
+    shuffle(shuffleArray);
+    for (let i = 0; i < shuffleArray.length; i++) {
+        shuffleArray[i].innerHTML = cardIconArray[i];
     }
 
     function findRandom() {
@@ -240,3 +326,21 @@ function randomizeCards() {
     }
 
 }
+// ------------------------FOR GAME MODES
+// function fillCards(){
+
+
+//     if(gameMode = 'med'){
+//         cardAmount = 10;
+//     }
+//     else if(gameMode = 'hard'){
+//         cardAmount = 20;
+//     }
+
+//     for(i = 0; i < cardAmount; i++){
+//         $('.board').append(` <div class="card">
+//         <div class="front"></div>
+//         <div class="back fa">X</div>
+//         </div>`);
+//     }
+// }

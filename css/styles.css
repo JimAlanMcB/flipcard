@@ -22,11 +22,14 @@ h1 {
     color: yellow;
     text-shadow: 2px 2px 4px rgb(120, 5, 252);
     font-size: 50px;
+    margin-bottom: auto;
 }
 
 .timer {
     color: rgb(87, 0, 201);
     text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.563);
+    font-size: 30px;
+    margin-top: 2px;
 }
 
 .attempts {
@@ -76,6 +79,8 @@ h1 {
 
 .fa {
     font-size: 1px;
+    color: rgb(120, 5, 252);
+    text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.563);
 }
 
 /* .board {
@@ -83,16 +88,17 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     max-width: 75%;
-    min-width: 50%;
+    min-width: 50%;   // FOR FLEX BOX
     max-height: 100%;
     min-height: 20%;
     text-align: center;
     margin: auto;
     font-size: 20px;
 } */
-.board{
-    grid-template-columns: 50px 50px 50px 50px 50px;
-    grid-template-rows: 75px 75px 75px 75px;
+
+.board {
+    grid-template-columns: 50px 50px 50px 50px;
+    grid-template-rows: 75px 75px 75px 75px 50px;
     max-width: 100%;
     margin-top: 10px;
     justify-content: center;
@@ -153,13 +159,61 @@ main {
     outline: 0;
 }
 
-@media screen and (max-width: 400px){
+.winPopUp {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.winPopUp-content {
+    background-color: rgb(10, 177, 238);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid rgba(168, 0, 119, 0.98);
+    width: 50%;
+    height: 30%;
+    font-size: 25px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Bubblegum Sans', cursive;
+    color: yellow;
+    text-shadow: 2px 2px 4px rgb(120, 5, 252);
+    font-weight: 500;
+}
+
+.close {
+    color: yellow;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
     main {
-       /* margin-top: 50%; */
-       margin-top: auto;
-        
+        /* margin-top: 50%; */
+        margin-top: auto;
     }
 }
-@media screen and (max-height: 400px){
 
+@media screen and (min-height: 400px) {
+    .board {
+        grid-template-rows: 75px 75px 75px 75px 5px;
+    }
+    .container {
+        max-height: -webkit-fill-available;
+    }
 }
