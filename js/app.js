@@ -6,7 +6,10 @@
 // EASY MODE / HARD MODE  
 // STORE DATA / LEADER BOARD
 // FANCY UP MORE
-
+let cardFlipSound = new Audio("sounds/cardflip.wav");
+let winAudio = new Audio("sounds/win.wav");
+let popAway = new Audio("sounds/popaway.wav");
+let bgMusic = new Audio("sounds/Toys.mp3");
 let totalWinCount = 0;
 let choice2 = '';
 let gameStarted = false;
@@ -38,7 +41,7 @@ fillStars();
 // REMOVE POP UP
 // CHECK IF TIMER IS RUNNING, FILL NEW STARS, RANDOM CARDS, START THE GAME
 $('.start').on('click', function () {
-
+    bgMusic.play();
     winPopUp.style.display = "none";
     checkTimer();
     fillStars();
@@ -68,8 +71,9 @@ function startGame() {
 // APPLY THE CSS TRANSFORM FOR FLIP ANIMATION
 // AND DETERMINE IF IT'S A WINNER OR NOT
 $('.card').on('click', function (e) {
-
+    cardFlipSound.pause();
     if (gameStarted) {
+        cardFlipSound.play();
 
         if ($(e.target).css('-webkit-transform').length > 10) {
 
@@ -105,6 +109,7 @@ function checkWinner(firstSelection, secondSelection) {
     if (choice === choice2) {
 
         setTimeout(() => {
+            popAway.play();
             clearSelections();
             clearChoices();
         }, 500);
@@ -118,6 +123,7 @@ function checkWinner(firstSelection, secondSelection) {
             // STOP TIMER
             // CLEAR CHOICES AND SELECTIONS
             // SEND WINNING MESSAGE
+            winAudio.play();
             totalWinCount += 1;
             running = false;
             clearTimer();
