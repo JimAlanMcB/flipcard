@@ -207,7 +207,12 @@ main {
         /* margin-top: 50%; */
         margin-top: auto;
     }
+    .winPopUp-content{
+        width: 60%;
+        height: auto;
+    }
 }
+
 
 @media screen and (min-height: 400px) {
     .board {

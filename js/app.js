@@ -93,8 +93,8 @@ $('.card').on('click', function (e) {
 
 function flipCards(e) {
 
-    $(e).css('-webkit-transform', 'rotateY(180deg)');
-    $(e.nextElementSibling).css('-webkit-transform', 'rotateY(360deg)');
+    $(e).css('-webkit-transform', 'rotateY(179deg)');
+    $(e.nextElementSibling).css('-webkit-transform', 'rotateY(359deg)');
 }
 
 function checkWinner(firstSelection, secondSelection) {
